@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import re
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -10,6 +11,14 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+
+
+def parseArg(args):
+    arg_dict = {}
+    p = re.compile(r'(\w+)=([\'\"])(\w*?)\2')
+    for arg in p.finditer(args):
+        arg_dict[arg.group(1)] = arg.group(3).replace("_", " ")
+    return arg_dict
 
 
 class HBNBCommand(cmd.Cmd):
@@ -115,13 +124,16 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        cls_name = args.split(" ")[0]
+        key_val = parseArg(args)
+        if not cls_name:
             print("** class name missing **")
             return
         elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[args](key_val)
+        print(key_val)
         storage.save()
         print(new_instance.id)
         storage.save()
