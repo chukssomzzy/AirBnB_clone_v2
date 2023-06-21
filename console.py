@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
+import shlex
 import sys
 import re
 from models.base_model import BaseModel
@@ -11,31 +12,6 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-
-p = re.compile(
-    r'(?P<key>\w+)='
-    r'(?:(?P<quote>[\'\"])(?P<string>.*?)(?P=quote)'
-    r'|'
-    r'(?P<integer>[-+]?\d+)'
-    r'|(?P<float>(?:[-+]?\d+(?:\.\d+)?|\.\d+)(?:[eE][-+]?\d+)?)'
-    r'|(?P<boolean>True|False)'
-    r'|(?P<none>None)'
-    r'|(?P<complex>(?:[-+]?\d+(?:\.\d+)?|\d*\.\d+)(?:[-+]?\d+[jJ])?)'
-    r')'
-)
-
-
-def parseArg(args):
-    arg_dict = {}
-    matches = p.findall(args)
-    print(matches)
-    for arg in matches:
-        key, _, string, integer, float_val, boolean, none, complex_val = arg
-        val = string.replace("_", " ") if string else int(integer) if integer \
-            else float(float_val) if float_val else boolean if boolean else \
-            none if none else complex_val
-        arg_dict[key] = val
-    return arg_dict
 
 
 class HBNBCommand(cmd.Cmd):
@@ -55,6 +31,17 @@ class HBNBCommand(cmd.Cmd):
         'max_guest': int, 'price_by_night': int,
         'latitude': float, 'longitude': float
     }
+
+    def _parseArg(self, args):
+        arg_dict = {}
+        for arg in args:
+            if "=" in arg:
+                [key, val] = arg.split("=", 1)
+                if self.types.get(key):
+                    arg_dict[key] = self.types[key](val)
+                elif arg.startswith('"') and arg.endswith('"'):
+                    arg_dict[key] = shlex.split(val)[0].replace("_", ' ')
+        return arg_dict
 
     def preloop(self):
         """Prints if isatty is false"""
@@ -141,14 +128,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        cls_name = args.split(" ")[0]
-        key_val = parseArg(args)
+        args = args.split()
+        cls_name = args[0]
         if not cls_name:
             print("** class name missing **")
             return
         elif cls_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
+        key_val = self._parseArg(args[1:])
         new_instance = HBNBCommand.classes[cls_name]()
         new_instance.__dict__.update(key_val)
         storage.save()

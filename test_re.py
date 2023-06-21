@@ -2,6 +2,17 @@
 
 
 import ast
+p = re.compile(
+    r'(?P<key>\w+)='
+    r'(?:(?P<quote>[\'\"])(?P<string>.*?)(?P=quote)'
+    r'|'
+    r'(?P<integer>[-+]?\d+)'
+    r'|(?P<float>(?:[-+]?\d+(?:\.\d+)?|\.\d+)(?:[eE][-+]?\d+)?)'
+    r'|(?P<boolean>True|False)'
+    r'|(?P<none>None)'
+    r'|(?P<complex>(?:[-+]?\d+(?:\.\d+)?|\d*\.\d+)(?:[-+]?\d+[jJ])?)'
+    r')'
+)
 
 
 def process_input(input_str):
