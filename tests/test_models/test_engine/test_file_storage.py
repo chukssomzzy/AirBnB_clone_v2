@@ -5,6 +5,8 @@ from models.base_model import BaseModel
 from models import storage
 import os
 
+from models.user import User
+
 
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
@@ -12,16 +14,16 @@ class test_fileStorage(unittest.TestCase):
     def setUp(self):
         """ Set up test environment """
         del_list = []
-        for key in storage._FileStorage__objects.keys():
+        for key in storage.all().keys():
             del_list.append(key)
         for key in del_list:
-            del storage._FileStorage__objects[key]
+            del storage.all()[key]
 
     def tearDown(self):
         """ Remove storage file at end of tests """
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_obj_list_empty(self):
@@ -30,16 +32,19 @@ class test_fileStorage(unittest.TestCase):
 
     def test_new(self):
         """ New object is correctly added to __objects """
-        new = BaseModel()
+        BaseModel()
         for obj in storage.all().values():
             temp = obj
-        self.assertTrue(temp is obj)
+            self.assertTrue(temp is obj)
 
     def test_all(self):
         """ __objects is properly returned """
         new = BaseModel()
-        temp = storage.all()
+        User()
+        temp = storage.all(BaseModel)
+        new_key = new.to_dict()['__class__'] + '.' + new.id
         self.assertIsInstance(temp, dict)
+        self.assertEqual(temp[new_key].id, new.id)
 
     def test_base_model_instantiation(self):
         """ File is not created on BaseModel save """
@@ -51,8 +56,15 @@ class test_fileStorage(unittest.TestCase):
         new = BaseModel()
         thing = new.to_dict()
         new.save()
-        new2 = BaseModel(**thing)
+        BaseModel(**thing)
         self.assertNotEqual(os.path.getsize('file.json'), 0)
+
+    def test_delete(self):
+        """Test deletion of data"""
+        new = BaseModel()
+        User()
+        storage.delete(new)
+        self.assertNotIn(new, storage.all())
 
     def test_save(self):
         """ FileStorage save method """
