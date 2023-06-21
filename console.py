@@ -12,12 +12,29 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
+p = re.compile(
+    r'(?P<key>\w+)='
+    r'(?:(?P<quote>[\'\"])(?P<string>.*?)(?P=quote)'
+    r'|'
+    r'(?P<integer>[-+]?\d+)'
+    r'|(?P<float>(?:[-+]?\d+(?:\.\d+)?|\.\d+)(?:[eE][-+]?\d+)?)'
+    r'|(?P<boolean>True|False)'
+    r'|(?P<none>None)'
+    r'|(?P<complex>(?:[-+]?\d+(?:\.\d+)?|\d*\.\d+)(?:[-+]?\d+[jJ])?)'
+    r')'
+)
+
 
 def parseArg(args):
     arg_dict = {}
-    p = re.compile(r'(\w+)=([\'\"])(\w*?)\2')
-    for arg in p.finditer(args):
-        arg_dict[arg.group(1)] = arg.group(3).replace("_", " ")
+    matches = p.findall(args)
+    print(matches)
+    for arg in matches:
+        key, _, string, integer, float_val, boolean, none, complex_val = arg
+        val = string.replace("_", " ") if string else int(integer) if integer \
+            else float(float_val) if float_val else boolean if boolean else \
+            none if none else complex_val
+        arg_dict[key] = val
     return arg_dict
 
 
@@ -129,11 +146,11 @@ class HBNBCommand(cmd.Cmd):
         if not cls_name:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif cls_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args](key_val)
-        print(key_val)
+        new_instance = HBNBCommand.classes[cls_name]()
+        new_instance.__dict__.update(key_val)
         storage.save()
         print(new_instance.id)
         storage.save()
