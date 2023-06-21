@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
                 [key, val] = arg.split("=", 1)
                 if self.types.get(key):
                     arg_dict[key] = self.types[key](val)
-                elif arg.startswith('"') and arg.endswith('"'):
+                elif val.startswith('"') and val.endswith('"'):
                     arg_dict[key] = shlex.split(val)[0].replace("_", ' ')
         return arg_dict
 
