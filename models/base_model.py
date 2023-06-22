@@ -5,7 +5,6 @@ from datetime import datetime
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import String, Column
 from sqlalchemy.types import DateTime
-from sqlalchemy.util.typing import de_optionalize_fwd_ref_union_types
 import models
 import os
 

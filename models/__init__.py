@@ -8,3 +8,4 @@ else:
     from models.engine.file_storage import FileStorage
     storage = FileStorage()
 storage.reload()
+db_type = os.getenv('HBNB_TYPE_STORAGE')
