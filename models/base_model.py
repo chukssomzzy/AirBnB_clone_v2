@@ -45,8 +45,8 @@ class BaseModel():
     def save(self):
         """Updates updated_at with current time when instance is changed"""
         self.updated_at = datetime.now()
-        models.storage.save()
         models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """Convert instance into dict format"""
@@ -57,7 +57,7 @@ class BaseModel():
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         if dictionary.get("_sa_instance_state"):
-            del dictionary["_sa_instance_state"]
+            del dictionary['_sa_instance_state']
         return dictionary
 
     def delete(self):

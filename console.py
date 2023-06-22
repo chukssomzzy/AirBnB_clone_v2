@@ -3,6 +3,7 @@
 import cmd
 import shlex
 import sys
+import copy
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -138,7 +139,7 @@ class HBNBCommand(cmd.Cmd):
         key_val = self._parseArg(args[1:])
         new_instance = HBNBCommand.classes[cls_name]()
         new_instance.__dict__.update(key_val)
-        storage.save()
+        new_instance.save()
         print(new_instance.id)
         storage.save()
 
@@ -222,11 +223,16 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage.all().items():
+            for k, v in copy.deepcopy(storage.all()).items():
                 if k.split('.')[0] == args:
+                    if "_sa_instance_state" in v.__dict__:
+                        del v._sa_instance_state
                     print_list.append(str(v))
         else:
-            for k, v in storage.all().items():
+            for k, v in copy.deepcopy(storage.all()).items():
+                if "_sa_instance_state" in v.__dict__:
+                    del v._sa_instance_state
+                print("stilL")
                 print_list.append(str(v))
 
         print(print_list)

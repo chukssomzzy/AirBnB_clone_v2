@@ -47,7 +47,6 @@ class DBStorage:
         elif self.__session:
             for cls_type in self.classes.values():
                 for cls_inst in self.__session.query(cls_type).all():
-                    print(cls_inst)
                     all_dict[cls_inst.__class__.
                              __name__ + "." + cls_inst.id] = cls_inst
             return all_dict
