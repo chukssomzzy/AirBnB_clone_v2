@@ -18,14 +18,12 @@ class DBStorage:
     __engine = None
     __session = None
     classes = {
-        'BaseModel': BaseModel, 'User': User, 'Place': Place,
-        'State': State, 'City': City, 'Amenity': Amenity,
-        'Review': Review
+        'State': State, 'City': City
     }
 
     def __init__(self):
         """initialize the database with the correct session and engine"""
-        engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}:{}'.
+        engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                format(os.getenv('HBNB_MYSQL_USER'),
                                       os.getenv('HBNB_MYSQL_PWD'), os.getenv(
                                           'HBNB_MYSQL_HOST'), os.getenv(
@@ -47,9 +45,11 @@ class DBStorage:
                          __name__ + "." + cls_inst.id] = cls_inst
             return all_dict
         elif self.__session:
-            for cls_inst in self.__session.query(self.classes.values).all():
-                all_dict[cls_inst.__class__.
-                         __name__ + "." + cls_inst.id] = cls_inst
+            for cls_type in self.classes.values():
+                for cls_inst in self.__session.query(cls_type).all():
+                    print(cls_inst)
+                    all_dict[cls_inst.__class__.
+                             __name__ + "." + cls_inst.id] = cls_inst
             return all_dict
 
     def new(self, obj):
