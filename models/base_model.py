@@ -9,7 +9,10 @@ from sqlalchemy.util.typing import de_optionalize_fwd_ref_union_types
 import models
 import os
 
-Base = declarative_base()
+if os.getenv('HBNB_TYPE_STORAGE') == "db":
+    Base = declarative_base()
+else:
+    Base = object
 
 
 class BaseModel():

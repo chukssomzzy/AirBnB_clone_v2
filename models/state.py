@@ -10,10 +10,13 @@ import models
 
 class State(BaseModel, Base):
     """ State class """
-    __tablename__ = "states"
-    name = Column(String(128), nullable=False)
-    cities = relationship("City", back_populates="state",
-                          cascade="all, delete, delete-orphan")
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        __tablename__ = "states"
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", back_populates="state",
+                              cascade="all, delete, delete-orphan")
+    else:
+        name = ""
 
     if os.getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
@@ -22,3 +25,7 @@ class State(BaseModel, Base):
             obj_cities = [city for city in models.storage.all(self).values()
                           if city.state_id == self.id]
             return obj_cities
+
+    def __init__(self, *args, **kwargs):
+        """initializes state"""
+        super().__init__(*args, **kwargs)
