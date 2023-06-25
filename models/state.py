@@ -27,5 +27,5 @@ class State(BaseModel, Base):
             return obj_cities
 
     def __init__(self, *args, **kwargs):
-        """initializes state"""
+        """initializes city"""
         super().__init__(*args, **kwargs)

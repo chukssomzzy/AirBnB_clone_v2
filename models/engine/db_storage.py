@@ -32,18 +32,19 @@ class DBStorage:
         self.__engine = engine
 
         if os.getenv('HBNB_ENV') == 'test':
-            Base.metadata.dropall(self.__engine)
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """Query on the current database session and returns all object
         depending on the cls and returns all if None
         """
         all_dict = {}
-        if cls in self.classes and self.__session:
-            for cls_inst in self.__session.query(cls).all():
-                all_dict[cls_inst.__class__.
-                         __name__ + "." + cls_inst.id] = cls_inst
-            return all_dict
+        if cls:
+            if cls.__name__ in self.classes.keys() and self.__session:
+                for cls_inst in self.__session.query(cls).all():
+                    all_dict[cls_inst.__class__.
+                             __name__ + "." + cls_inst.id] = cls_inst
+                return all_dict
         elif self.__session:
             for cls_type in self.classes.values():
                 for cls_inst in self.__session.query(cls_type).all():

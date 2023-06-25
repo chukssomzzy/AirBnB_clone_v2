@@ -4,7 +4,9 @@ from models.base_model import BaseModel
 import unittest
 import datetime
 import json
+from os import getenv
 import os
+import MySQLdb
 
 
 class test_basemodel(unittest.TestCase):
@@ -16,21 +18,47 @@ class test_basemodel(unittest.TestCase):
         self.name = 'BaseModel'
         self.value = BaseModel
 
+    @classmethod
+    def setUpClass(cls):
+        """setup class"""
+        if getenv("HBNB_TYPE_STORAGE") == 'db' and \
+                getenv('HBNB_ENV') == 'test':
+            cls._conn = MySQLdb.connect(host=getenv('HBNB_MYSQL_HOST'),
+                                        passwd=getenv('HBNB_MYSQL_PWD'),
+                                        user=getenv('HBNB_MYSQL_USER'),
+                                        db=getenv('HBNB_MYSQL_DB'))
+            cls._cur = cls._conn.cursor()
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """Close all connection"""
+        cls._cur.close()
+        cls._conn.close()
+
     def setUp(self):
         """ """
-        pass
-
-    def tearDown(self):
-        try:
-            os.remove('file.json')
-        except Exception:
+        if getenv("HBNB_TYPE_STORAGE") == "db":
+            pass
+        else:
             pass
 
+    def tearDown(self):
+        """ """
+        if getenv("HBNB_TYPE_STORAGE") == "db":
+            pass
+        else:
+            try:
+                os.remove('file.json')
+            except Exception:
+                pass
+
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_default(self):
         """ """
         i = self.value()
         self.assertEqual(type(i), self.value)
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_kwargs(self):
         """ """
         i = self.value()
@@ -38,6 +66,7 @@ class test_basemodel(unittest.TestCase):
         new = BaseModel(**copy)
         self.assertFalse(new is i)
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_kwargs_int(self):
         """ """
         i = self.value()
@@ -46,6 +75,7 @@ class test_basemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             BaseModel(**copy)
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "database storage")
     def test_save(self):
         """ Testing save """
         i = self.value()
@@ -55,40 +85,47 @@ class test_basemodel(unittest.TestCase):
             j = json.load(f)
             self.assertEqual(j[key], i.to_dict())
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_str(self):
         """ """
         i = self.value()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
-                         i.__dict__))
+                                                       i.__dict__))
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_todict(self):
         """ """
         i = self.value()
         n = i.to_dict()
         self.assertEqual(i.to_dict(), n)
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_kwargs_none(self):
         """ """
         n = {None: None}
         with self.assertRaises(TypeError):
             self.value(**n)
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_kwargs_one(self):
         """ """
         n = {'Name': 'test'}
         with self.assertRaises(KeyError):
             self.value(**n)
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_id(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.id), str)
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_created_at(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.created_at), datetime.datetime)
 
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "db")
     def test_updated_at(self):
         """ """
         new = self.value()
