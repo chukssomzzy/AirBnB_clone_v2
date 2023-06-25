@@ -16,7 +16,7 @@ class City(BaseModel, Base):
         name = Column(String(128), nullable=False)
         state = relationship("State", back_populates="cities")
         places = relationship("Place", back_populates="city",
-                              order_by="Place.name", cascade="all, delete, delete-orphan")
+                              order_by="Place.name", cascade="all, delete-orphan")
     else:
         state_id = ""
         name = ""

@@ -22,7 +22,8 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """ returns cities in current state """
-            obj_cities = [city for city in models.storage.all(self).values()
+            obj_cities = [city for city in models.storage.
+                          all(self.__class__).values()
                           if city.state_id == self.id]
             return obj_cities
 
