@@ -15,7 +15,11 @@ class User(BaseModel, Base):
         first_name = Column(String(128), nullable=False)
         last_name = Column(String(128), nullable=False)
         places = relationship("Place", back_populates="user",
-                              order_by="Place.name", cascade="all, delete, delete-orphan")
+                              order_by="Place.name", cascade="all, delete, \
+                              delete-orphan")
+        reviews = relationship("Review", order_by="Review.text",
+                               back_populates="user", cascade="all, delete, \
+                               delete-orphan")
 
     else:
         email = ''
