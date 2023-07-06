@@ -21,6 +21,8 @@ mkdir -p $DIR_TEST
 # mkdir for shared 
 mkdir -p $DIR_SHARED
 
+mkdir -p $DIR_CUR
+
 # create fake html file
 if ! [[ -s "$DIR_TEST/index.html" ]]; then
 cat << EOT >> "$DIR_TEST/index.html"
