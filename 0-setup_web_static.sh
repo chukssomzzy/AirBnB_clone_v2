@@ -25,14 +25,11 @@ mkdir -p $DIR_SHARED
 if ! [[ -s "$DIR_TEST/index.html" ]]; then
 cat << EOT >> "$DIR_TEST/index.html"
 <html>
-<head>
-<title>
-Fake Html Content
-</title>
-</head>
-<body>
-<h1> Fake Html Content </h1>
-</body>
+  <head>
+  </head>
+  <body>
+    Holberton School
+  </body>
 </html>
 EOT
 fi
