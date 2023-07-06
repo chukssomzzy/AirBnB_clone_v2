@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 # setup webserver for deployment of webstatic
 DIR_DATA="/data"
-DIR_RELEASE="$DIR_DATA/web_static/releases"
 DIR_TEST="$DIR_DATA/web_static/releases/test"
-DIR_SHARED="$DIR_TEST/web_static/shared"
+DIR_SHARED="$DIR_DATA/web_static/shared"
 DIR_CUR="$DIR_DATA/web_static/current"
 USER_CONF="ubuntu"
 NGINX_CONF="/etc/nginx/sites-available/"
@@ -60,6 +59,9 @@ fi
 if ! [[ -h "$NGINX_ENABLED/somzzy.tech" ]]; then
 ln -s "$NGINX_CONF/somzzy.tech" "$NGINX_ENABLED"
 fi
+
+sed -i "s/#server_na.*_size\s64;/server_names_hash_bucket_size 64;/1" "/etc/nginx/nginx.conf" 
+
 if  nginx -t; then
 service nginx restart 
 exit 0
