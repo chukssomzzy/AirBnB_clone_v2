@@ -50,6 +50,7 @@ server {
 
     location /hbnb_static/ {
         alias "$DIR_CUR";
+        autoindex off;
     }
 
     location / {
