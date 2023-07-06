@@ -10,7 +10,7 @@ NGINX_CONF="/etc/nginx/nginx/sites_available/"
 NGINX_ENABLED="/etc/nginx/sites_enabled"
 
 # upgrase the system
-apt-get upgrade
+apt-get update
 
 # install nginx 
 apt-get -y install nginx
