@@ -42,7 +42,6 @@ ln -s -f $DIR_TEST $DIR_TEST
 chown -R $USER_CONF:$USER_CONF $DIR_DATA
 
 # update nginx 
-if ! [[ -s "$NGINX_CONF/default" ]]; then
 cat << EOT > "$NGINX_CONF/default"
 server {
     
@@ -70,7 +69,6 @@ server {
     add_header X-Served-By $(hostname);
 }
 EOT
-fi 
 
 if ! [[ -h "$NGINX_ENABLED/default" ]]; then
 ln -s "$NGINX_CONF/default" "$NGINX_ENABLED"
