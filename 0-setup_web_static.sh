@@ -47,7 +47,7 @@ server {
     listen [::]:80 default_server;
 
     location /hbnb_static/ {
-        alias "$DIR_CUR";
+        alias "$DIR_CUR/";
         autoindex off;
     }
 
