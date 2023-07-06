@@ -52,6 +52,8 @@ server {
 }
 EOT
 ln -s "$NGINX_CONF/www.somzzy.tech" "$NGINX_ENABLED/www.somzzy.tech"
-
+if ! nginx -t; then
 nginx -s reload 
 exit 0
+fi 
+exit 1
