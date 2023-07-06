@@ -13,7 +13,7 @@ NGINX_ENABLED="/etc/nginx/sites_enabled"
 apt-get upgrade
 
 # install nginx 
-apt-get install nginx
+apt-get -y install nginx
 
 # mkdir for test
 mkdir -p $DIR_TEST
