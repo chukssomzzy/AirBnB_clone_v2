@@ -58,7 +58,7 @@ fi
 if ! [[ -h "$NGINX_ENABLED/www.somzzy.tech" ]]; then
 ln -s "$NGINX_CONF/www.somzzy.tech" "$NGINX_ENABLED"
 fi
-if ! nginx -t; then
+if  nginx -t; then
 nginx -s reload 
 exit 0
 fi 
