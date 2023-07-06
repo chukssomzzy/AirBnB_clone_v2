@@ -50,7 +50,7 @@ server {
 
     location /hbnb_static/ {
     alias $DIR_CUR
-}
+    }
 }
 EOT
 ln -s "$NGINX_CONF/www.somzzy.tech" "$NGINX_ENABLED"
