@@ -43,7 +43,7 @@ ln -s -f $DIR_TEST $DIR_TEST
 chown -R $USER_CONF:$USER_CONF $DIR_DATA
 
 # update nginx 
-
+if ! [[ -s "$NGINX_CONF/www.somzzy.tech" ]]; then
 cat << EOT >> "$NGINX_CONF/www.somzzy.tech"
 server {
     server_name somzzy.tech www.somzzy.tech;
@@ -53,7 +53,11 @@ server {
     }
 }
 EOT
+fi 
+
+if ! [[ -h "$NGINX_ENABLED/www.somzzy.tech" ]]; then
 ln -s "$NGINX_CONF/www.somzzy.tech" "$NGINX_ENABLED"
+fi
 if ! nginx -t; then
 nginx -s reload 
 exit 0
