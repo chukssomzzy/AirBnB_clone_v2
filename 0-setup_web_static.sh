@@ -6,7 +6,7 @@ DIR_TEST="$DIR_DATA/web_static/releases/test"
 DIR_SHARED="$DIR_TEST/web_static/shared"
 DIR_CUR="$DIR_DATA/web_static/current"
 USER_CONF="ubuntu"
-NGINX_CONF="/etc/nginx/nginx/sites_available/"
+NGINX_CONF="/etc/nginx/sites_available/"
 NGINX_ENABLED="/etc/nginx/sites_enabled"
 
 # upgrase the system
@@ -51,7 +51,7 @@ server {
 }
 }
 EOT
-ln -s "$NGINX_CONF/www.somzzy.tech" "$NGINX_ENABLED/www.somzzy.tech"
+ln -s "$NGINX_CONF/www.somzzy.tech" "$NGINX_ENABLED/"
 if ! nginx -t; then
 nginx -s reload 
 exit 0
