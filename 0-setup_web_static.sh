@@ -51,6 +51,8 @@ server {
     location /hbnb_static/ {
         alias $DIR_CUR;
     }
+
+    add_header X-Served-By 152562-web-02;
 }
 EOT
 fi 
