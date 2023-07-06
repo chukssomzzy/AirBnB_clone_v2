@@ -43,7 +43,7 @@ chown -R $USER_CONF:$USER_CONF $DIR_DATA
 
 # update nginx 
 if ! [[ -s "$NGINX_CONF/default" ]]; then
-cat << EOT >> "$NGINX_CONF/default"
+cat << EOT > "$NGINX_CONF/default"
 server {
     
     listen 80 default_server;
