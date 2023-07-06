@@ -48,9 +48,11 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
-    root /var/www/html;
-    index index.html;
-    
+    location / {
+        root /var/www/html;
+        index index.html;
+    }
+
     location /hbnb_static/ {
         alias $DIR_CUR;
     }
