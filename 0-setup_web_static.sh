@@ -49,7 +49,7 @@ server {
     server_name somzzy.tech www.somzzy.tech;
 
     location /hbnb_static/ {
-        alias $DIR_CUR
+        alias $DIR_CUR;
     }
 }
 EOT
