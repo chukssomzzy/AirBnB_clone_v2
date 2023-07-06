@@ -48,15 +48,15 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
+    location /hbnb_static/ {
+        alias $DIR_CUR;
+    }
+
     location / {
         root /var/www/html;
         index index.html;
     }
 
-    location /hbnb_static/ {
-        alias $DIR_CUR;
-    }
-    
     location /redirect_me {
         return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
