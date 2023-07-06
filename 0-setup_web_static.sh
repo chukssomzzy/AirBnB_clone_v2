@@ -42,25 +42,40 @@ ln -s -f $DIR_TEST $DIR_TEST
 chown -R $USER_CONF:$USER_CONF $DIR_DATA
 
 # update nginx 
-if ! [[ -s "$NGINX_CONF/somzzy.tech" ]]; then
-cat << EOT >> "$NGINX_CONF/somzzy.tech"
+if ! [[ -s "$NGINX_CONF/default" ]]; then
+cat << EOT >> "$NGINX_CONF/default"
 server {
-    server_name somzzy.tech www.somzzy.tech;
+    
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
+    root /var/www/html;
+    index index.html;
+    
     location /hbnb_static/ {
         alias $DIR_CUR;
     }
+    
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
 
-    add_header X-Served-By 152562-web-02;
+    error_page 404 /404.html;
+
+    location = /404.html{
+        internal;
+    }
+
+   
+    add_header X-Served-By $(hostname);
 }
 EOT
 fi 
 
-if ! [[ -h "$NGINX_ENABLED/somzzy.tech" ]]; then
-ln -s "$NGINX_CONF/somzzy.tech" "$NGINX_ENABLED"
+if ! [[ -h "$NGINX_ENABLED/default" ]]; then
+ln -s "$NGINX_CONF/default" "$NGINX_ENABLED"
 fi
 
-sed -i "s/#server_na.*_size\s64;/server_names_hash_bucket_size 64;/1" "/etc/nginx/nginx.conf" 
 
 if  nginx -t; then
 service nginx restart 
