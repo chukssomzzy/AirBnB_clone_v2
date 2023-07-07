@@ -14,7 +14,7 @@ def do_pack():
     try:
         if not os.path.isdir(dir_name):
             local("mkdir versions")
-            local(f"tar -cvzf {dir_name}/{archive_name} web_static").failed
-            return archive_name
+            local(f"tar -cvzf {dir_name}/{archive_name} web_static")
+            return f"{dir_name}/{archive_name}"
     except Exception:
         return None
