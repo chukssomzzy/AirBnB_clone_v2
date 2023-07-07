@@ -9,12 +9,13 @@ import os.path
 def do_pack():
     """Run tar on localmachine"""
     cur_date = datetime.now()
-    archive_name = cur_date.strftime('web_static_%Y%m%d%H%M%S.tgz')
+    date_tar = cur_date.strftime('%Y%m%d%H%M%S')
     dir_name = 'versions'
+    filepath = f"{dir_name}/web_static_{date_tar}.tgz"
     try:
         if not os.path.isdir(dir_name):
             local("mkdir versions")
-            local(f"tar -cvzf {dir_name}/{archive_name} web_static")
-            return f"{dir_name}/{archive_name}"
+            local(f"tar -cvzf {filepath} web_static")
+            return filepath
     except Exception:
         return None
