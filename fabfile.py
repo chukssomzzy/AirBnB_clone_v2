@@ -10,7 +10,7 @@ import os
 def do_pack(c):
     """Run tar on localmachine"""
     cur_date = datetime.now()
-    archive_name = cur_date.strftime('web_static_%Y%m%d%H%M%S.tgz')
+    archive_name = cur_date.strftime('web_static_%Y%m%d%H%M%S')
     dir_name = 'version'
     if not os.path.isdir(dir_name):
         if c.local("mkdir versions").failed:
