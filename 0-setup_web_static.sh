@@ -60,6 +60,7 @@ fi
 if ! [[ -h "$NGINX_ENABLED/somzzy.tech" ]]; then
 ln -s "$NGINX_CONF/somzzy.tech" "$NGINX_ENABLED"
 fi
+
 if  nginx -t; then
 service nginx restart 
 exit 0
