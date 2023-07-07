@@ -11,9 +11,10 @@ def do_pack():
     cur_date = datetime.now()
     archive_name = cur_date.strftime('web_static_%Y%m%d%H%M%S.tgz')
     dir_name = 'versions'
-    if not os.path.isdir(dir_name):
-        if local("mkdir versions").failed:
-            return None
-    if local(f"tar -cvsf {dir_name}/{archive_name} web_static").failed:
+    try:
+        if not os.path.isdir(dir_name):
+            local("mkdir versions")
+            local(f"tar -cvzf {dir_name}/{archive_name} web_static").failed
+            return archive_name
+    except Exception:
         return None
-    return archive_name
