@@ -8,7 +8,7 @@ import os.path
 
 def do_pack():
     """Run tar on localmachine"""
-    cur_date = datetime.now()
+    cur_date = datetime.utcnow()
     date_tar = cur_date.strftime('%Y%m%d%H%M%S')
     dir_name = 'versions'
     filepath = f"{dir_name}/web_static_{date_tar}.tgz"
