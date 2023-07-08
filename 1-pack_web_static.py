@@ -11,11 +11,11 @@ def do_pack():
     cur_date = datetime.utcnow()
     date_tar = cur_date.strftime('%Y%m%d%H%M%S')
     dir_name = 'versions'
-    filepath = f"{dir_name}/web_static_{date_tar}"
+    filepath = "{}/web_static_{}.tgz".format(dir_name, date_tar)
     try:
         if not os.path.isdir(dir_name):
             local("mkdir versions")
-        local(f"tar -cvzf {filepath} web_static")
+        local("tar -cvzf {} web_static".format(filepath))
         return filepath
     except Exception:
         return None
