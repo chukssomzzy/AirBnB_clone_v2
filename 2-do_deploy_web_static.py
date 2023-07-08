@@ -12,7 +12,7 @@ env.hosts = ["54.160.79.245", '18.234.129.129']
 def do_deploy(archive_path):
     """Push local archieve to remote server """
 
-    if not archive_path or not os.path.isfile(archive_path):
+    if not archive_path or not os.path.exists(archive_path):
         return False
     archive_file = archive_path.split('/')[-1]
     archive_file_noext = archive_file.split('.')[0]
