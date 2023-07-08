@@ -4,7 +4,7 @@
 
 from fabric.api import env, run, put
 import os.path
-
+ssh.util.log_to_file("paramiko.log", 10)
 env.hosts = ["54.160.79.245", '18.234.129.129']
 
 
