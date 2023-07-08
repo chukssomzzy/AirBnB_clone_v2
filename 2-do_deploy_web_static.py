@@ -2,6 +2,7 @@
 
 """distributes an archive to your web servers"""
 
+from sys import argv
 from fabric.api import env, run, put
 import os.path
 import logging
@@ -11,7 +12,7 @@ env.hosts = ["54.160.79.245", '18.234.129.129']
 
 def do_deploy(archive_path):
     """Push local archieve to remote server """
-    print("did not try")
+    print(archive_path)
     if not archive_path or not os.path.exists(archive_path):
         return False
     archive_file = archive_path.split('/')[-1]
@@ -20,7 +21,6 @@ def do_deploy(archive_path):
     remo_releases = '/data/web_static/releases/{}/'.format(archive_file_noext)
     tmp_arch = '/tmp/{}'.format(archive_file)
     repo_cur = '/data/web_static/current'
-    print("try")
     try:
         put("{}".format(localfile), "/tmp/")
         run("mkdir -p {}".format(remo_releases))
