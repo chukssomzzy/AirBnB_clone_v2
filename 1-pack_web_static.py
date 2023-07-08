@@ -16,6 +16,7 @@ def do_pack():
         if not os.path.isdir(dir_name):
             local("mkdir versions")
         local("tar -cvzf {} web_static".format(filepath))
+        local("chmod 554 {}".format(filepath))
         return filepath
     except Exception:
         return None
