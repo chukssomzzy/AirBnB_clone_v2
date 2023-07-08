@@ -3,7 +3,8 @@
 """distributes an archive to your web servers"""
 
 from fabric.api import env, run, put
-
+from fabric import ssh
+ssh.util.log_to_file("paramiko.log", 10)
 env.hosts = ["54.160.79.245", '18.234.129.129']
 
 
