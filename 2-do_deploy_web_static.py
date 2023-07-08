@@ -3,6 +3,7 @@
 """distributes an archive to your web servers"""
 
 from fabric.api import env, run, put
+import os.path
 
 env.hosts = ["54.160.79.245", '18.234.129.129']
 
@@ -13,7 +14,7 @@ def do_deploy(archive_path):
     remo_releases = '/data/web_static/releases/web_static_20230708143924/'
     tmp_arch = '/tmp/web_static_20230708143924.tgz'
     repo_cur = '/data/web_static/current'
-    if not archive_path:
+    if not archive_path or not os.path.isfile(archive_path):
         return False
     try:
         put("{}".format(localfile), "/tmp/")
