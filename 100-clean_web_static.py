@@ -18,7 +18,7 @@ def do_clean(number=0):
         for file in archive_sorted[:-number]:
             local("rm -rf {}".format(file))
     with cd("/data/web_static/releases"):
-        dirList = run("ls -rt").split()
+        dirList = [dir for dir in run("ls -rt").split() if dir.
+                   startswith("web_static_")]
         for file in dirList[:-number]:
-            if file.startswith("web_static_"):
-                run("rm -rf {}".format(file))
+            run("rm -rf {}".format(file))
