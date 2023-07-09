@@ -4,9 +4,7 @@
 
 from fabric.api import env, run, put
 from os.path import exists
-import logging
-logging.basicConfig(level=logging.DEBUG)
-env.hosts = ["54.160.79.245", '18.234.129.129']
+env.hosts = ["web-02.somzzy.tech", 'web-01.somzzy.tech']
 
 
 def do_deploy(archive_path):
@@ -14,14 +12,13 @@ def do_deploy(archive_path):
 
     archive_file = archive_path.split('/')[-1]
     archive_file_noext = archive_file.split('.')[0]
-    localfile = './versions/{}'.format(archive_file)
     remo_releases = '/data/web_static/releases/{}/'.format(archive_file_noext)
     tmp_arch = '/tmp/{}'.format(archive_file)
     repo_cur = '/data/web_static/current'
     if not archive_path or not exists(archive_path.split('/')[0]):
         return False
     try:
-        put("{}".format(localfile), "/tmp/")
+        put("{}".format(archive_path), "/tmp/")
         run("mkdir -p {}".format(remo_releases))
         run("tar -xzf {} -C {}".format(tmp_arch, remo_releases))
         run("rm {}".format(tmp_arch))
