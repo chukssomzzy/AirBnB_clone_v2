@@ -33,15 +33,10 @@ $nginxconfig = "server {
     }
 
 
-    add_header X-Served-By 152562-web-01;
+    add_header X-Served-By ${hostname};
 }
  "
-file {'/data/':
-  ensure  => directory,
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
-  recurse => 'true'
-}
+
 
 file {'/data/web_static/':
   ensure => directory
@@ -74,3 +69,10 @@ file {'/etc/nginx/sites-available/default':
   ensure  => file,
   content => nginxconfig,
 }
+
+file {'/data/':
+  ensure  => directory,
+  owner   => 'ubuntu',
+  group   => 'ubuntu',
+  recurse => 'true'
+  } 
