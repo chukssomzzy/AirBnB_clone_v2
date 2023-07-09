@@ -13,7 +13,7 @@ $nginxconfig = "server {
     listen [::]:80 default_server;
 
     location /hbnb_static/ {
-        alias "/data/web_static/current/";
+        alias '/data/web_static/current/';
         autoindex off;
     }
 
