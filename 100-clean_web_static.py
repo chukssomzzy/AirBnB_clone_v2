@@ -7,7 +7,7 @@ import os
 env.hosts = ["web-01.somzzy.tech", "web-02.somzzy.tech"]
 
 
-def do_cleanup(number=0):
+def do_clean(number=0):
     """Cleanup archive file"""
     number = int(number)
     number = (number == 0 or number == 1) and 1 or number
