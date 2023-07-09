@@ -75,4 +75,4 @@ file {'/data/':
   owner   => 'ubuntu',
   group   => 'ubuntu',
   recurse => 'true'
-  } 
+  }
