@@ -37,11 +37,14 @@ $nginxconfig = "server {
 }
  "
 file {'/data/':
-  ensure => directory,
+  ensure  => directory,
+  owner   => 'ubuntu',
+  group   => 'ubuntu',
+  recurse => 'true'
 }
 
 file {'/data/web_static/':
-ensure => directory
+  ensure => directory
 }
 
 file {'/data/web_static/releases/':
@@ -57,21 +60,13 @@ file {'/data/web_static/releases/test/index.html':
   content => $htmlcontent
 }
 
-file {'/data/web_static/releases/test/':
+file {'/data/web_static/current':
   ensure => link,
-  target => '/data/web_static/current'
+  target => '/data/web_static/releases/test/'
 }
 
-file {'/data/':
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
-  recurse => 'true'
-}
 
 file {'/etc/nginx/sites-available/default':
   ensure  => file,
   content => nginxconfig,
-  owner   => 'root',
-  group   => 'root',
-  mode    => '0644'
 }
