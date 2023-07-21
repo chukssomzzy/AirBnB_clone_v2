@@ -12,13 +12,13 @@ def index():
 
 
 @app.route("/hbnb", strict_slashes=False)
-def index_hbnb():
+def hbnb():
     """Defines the hbnb route"""
     return "HBNB"
 
 
 @app.route("/c/<text>", strict_slashes=False)
-def c_text(text):
+def c(text):
     """displays text from url"""
     if (text):
         text = text.replace("_", " ")

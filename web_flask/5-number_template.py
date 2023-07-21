@@ -23,13 +23,13 @@ def index():
 
 
 @app.route("/hbnb", strict_slashes=False)
-def index_hbnb():
+def hbnb():
     """Defines the hbnb route"""
     return "HBNB"
 
 
 @app.route("/c/<text>", strict_slashes=False)
-def c_text(text):
+def c(text):
     """Displays url params"""
     if (text):
         text = text.replace("_", " ")
@@ -39,21 +39,21 @@ def c_text(text):
 @app.route("/python/", defaults={"text": "is cool"},
            strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
-def python_cool(text):
+def python(text):
     """displays 'Python'. followed by the value of text"""
     text = text.replace("_", " ")
     return f"Python {text}"
 
 
 @app.route("/number/<int:n>", strict_slashes=False)
-def display_number(n):
+def number(n):
     return f"{n} is a number"
 
 
 @app.route("/number_template/<int:n>", strict_slashes=False)
-def render_number(n):
+def number_template(n):
     """Render the the number.html page"""
-    return render_template('5-number.html', number=n)
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == "__main__":
