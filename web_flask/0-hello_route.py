@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""starts a flask web application"""
+"""starts a flask web application
+Routes:
+    /: display "Hello HBNB!"
+"""
 from flask import Flask
 
 app = Flask(__name__)
