@@ -1,1 +1,2 @@
-venv/ # exclude venv from what being committed
+venv/ 
+# exclude venv from what being committed

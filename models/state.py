@@ -5,6 +5,7 @@ from sqlalchemy import Column
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import String
 from models.base_model import Base, BaseModel
+from models.city import City
 import models
 
 
@@ -23,7 +24,7 @@ class State(BaseModel, Base):
         def cities(self):
             """ returns cities in current state """
             obj_cities = [city for city in models.storage.
-                          all(self.__class__).values()
+                          all(City).values()
                           if city.state_id == self.id]
             return obj_cities
 
