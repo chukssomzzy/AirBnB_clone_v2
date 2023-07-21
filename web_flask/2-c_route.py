@@ -19,6 +19,7 @@ def index_hbnb():
 
 @app.route("/c/<text>", strict_slashes=False)
 def c_text(text):
+    """displays text from url"""
     if (text):
         text = text.replace("_", " ")
     return f"C {text}"
