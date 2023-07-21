@@ -8,7 +8,7 @@ Routes:
     (replace underscore_ symbol with a space)
     /python/(<text>): display "python", followed by the value fo the text
     variable
-        default: text = "is cool"
+    default: text = "is cool"
 """
 from flask import Flask
 
@@ -42,3 +42,7 @@ def python_cool(text):
     """displays 'Python'. followed by the value of text"""
     text = text.replace("_", " ")
     return f"Python {text}"
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
