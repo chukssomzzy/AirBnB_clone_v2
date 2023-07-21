@@ -1,7 +1,0 @@
-{
-  "executionEnvironments": [
-    {"root": "src"}
-  ], 
-  "venvPath": "/home/vagrant/AirBnB_clone_v2",
-  "venv": "venv"
-}
