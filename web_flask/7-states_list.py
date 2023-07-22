@@ -8,12 +8,6 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.teardown_appcontext
-def teardown():
-    """Close the current session"""
-    storage.close()
-
-
 @app.route("/states_list", strict_slashes=False)
 def state_list():
     """Render a state template"""
